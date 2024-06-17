@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{{ include('home/header.html.twig') }}
+
+    <h1>Auction Interface</h1>
+    
+<br>
+</br>
+<br></br>
+
+<form action="" method="post">
+
+            <label for="bidAmount">Bid Amount:</label>
+            {{ enchere.montantFinal }}
+            
+            <br>
+            <h1> {{ enchere.nomEnchere }} </h1>
+    
+            <img src="{{ asset('images_auctions/' ~ enchere.image) }}" alt="{{ enchere.nomEnchere }}">
+       
+            <br>
+            <label for="initialBid">Initial Bid:</label>
+            {{ enchere.montantInitial }}
+            <br>
+            {% if app.user.id != enchere.Idclcreree %}
+
+            <label for="finalBid">Final Bid:</label>
+           
+            <input type="text" id="finalBid" name="finalBid" required>
+            <br>
+            <button type="submit">Place Bid</button>
+        </form>
+        {% endif %}
+{{ include('enchere/footer.html.twig') }}
+</div>
+</div>
+
+{% endblock %}

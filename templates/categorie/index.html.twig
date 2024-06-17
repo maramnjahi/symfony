@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+    <h1>Categorie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+            
+                <th>Nom Catégorie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+            
+                <td>{{ categorie.nomC }}</td>
+                <td>
+                    <!-- Bouton pour afficher la catégorie -->
+                    <a href="{{ path('app_categorie_show', {'idC': categorie.idC}) }}" class="btn btn-info">Afficher</a>
+                    
+                    <!-- Bouton pour éditer la catégorie -->
+                    <a href="{{ path('app_categorie_edit', {'idC': categorie.idC}) }}" class="btn btn-warning">Éditer</a>
+                    
+                    <!-- Formulaire pour supprimer la catégorie -->
+                    <form method="post" action="{{ path('app_categorie_delete', {'idC': categorie.idC}) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette catégorie?');" style="display: inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.idC) }}">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                 <a href="{{ path('admin_produit_index', {'idC': categorie.idC}) }}" class="btn btn-info">Afficher Produits</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bouton pour créer une nouvelle catégorie -->
+    <a href="{{ path('app_categorie_new') }}" class="btn btn-success">Créer un nouveau</a>
+{% endblock %}

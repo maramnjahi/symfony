@@ -1,0 +1,202 @@
+{% extends '/admin/admin.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+  <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+            
+
+
+            <div class="col-xl-6 grid-margin stretch-card flex-column">
+                <h5 class="mb-2 text-titlecase mb-4">Status statistics</h5>
+              <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <p class="mb-0 text-muted">Session</p>
+                        <p class="mb-0 text-muted"></p>
+                      </div>
+                      <h4>{{session}}</h4>
+                      <canvas id="transactions-chart" class="mt-auto" height="65"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                          <p class="mb-2 text-muted">Active Users</p>
+                          <h4 class="mb-0">{{Actuser}}</h4>
+                        </div>
+                        <div>
+                          <p class="mb-2 text-muted">Inactive Users</p>
+                          <h4 class="mb-0">{{Inuser}}</h4>
+                        </div>
+                        
+                      </div>
+                      <canvas id="sales-chart-a" class="mt-auto" height="65"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row h-100">
+                <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+                  <div class="card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <p class="text-muted">Sales Analytics</p>
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 class="mb-">27632</h3>
+                        <h3 class="mb-">78%</h3>
+                      </div>
+                      <canvas id="sales-chart-b" class="mt-auto" height="38"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row h-100">
+                        <div class="col-6 d-flex flex-column justify-content-between">
+                          <p class="text-muted">CPU</p>
+                          <h4>55%</h4>
+                          <canvas id="cpu-chart" class="mt-auto"></canvas>
+                        </div>
+                        <div class="col-6 d-flex flex-column justify-content-between">
+                          <p class="text-muted">Memory</p>
+                          <h4>123,65</h4>
+                          <canvas id="memory-chart" class="mt-auto"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 grid-margin stretch-card flex-column">
+              <h5 class="mb-2 text-titlecase mb-4">  Active/Inactive Users by month</h5>
+              <div class="row h-100">
+                <div class="col-md-12 stretch-card">
+                  <div class="card">
+                   <div class="card">
+             
+              <div class="card-body">
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="revenue-chart"
+                       style="position: relative; height: 300px;">
+                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                   </div>
+                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                  </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+
+        
+        
+
+        </div>
+ 
+      </div>
+      
+{% endblock %}
+{% block js %}
+
+<script>
+
+  // Line Chart
+  
+  /* Chart.js Charts */
+  // Sales chart
+  var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
+  // $('#revenue-chart').get(0).getContext('2d');
+
+  var salesChartData = {
+    labels: {{ months|json_encode |raw}},
+    datasets: [
+      {
+        label: 'Inactive',
+        backgroundColor: 'rgba(210, 214, 222, 1)',
+        borderColor: 'rgba(210, 214, 222, 1)',
+        pointRadius: false,
+        pointColor: 'rgba(210, 214, 222, 1)',
+        pointStrokeColor: '#c1c7d1',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(220,220,220,1)',
+        data:  {{ dataInactive|json_encode|raw }}
+      },
+      {
+        label: 'Active',
+        backgroundColor: 'rgba(60,141,188,0.9)',
+        borderColor: 'rgba(60,141,188,0.8)',
+        pointRadius: false,
+        pointColor: '#3b8bba',
+        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointHighlightFill: '#fff',
+        pointHighlightStroke: 'rgba(60,141,188,1)',
+        data: {{ dataActive|json_encode|raw }}
+      },
+
+      
+    ]
+  }
+
+  var salesChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      display: true
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          display: false
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  }
+
+  // This will get the first returned node in the jQuery collection.
+  // eslint-disable-next-line no-unused-vars
+  var salesChart = new Chart(salesChartCanvas, { // lgtm[js/unused-local-variable]
+    type: 'line',
+    data: salesChartData,
+    options: salesChartOptions
+  })
+
+
+  
+</script>
+<script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="{{ asset('vendors/chart.js/Chart.min.js') }}"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="{{ asset('js/off-canvas.js') }}"></script>
+  <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
+  <script src="{{ asset('js/template.js') }}"></script>
+  <script src="{{ asset('js/settings.js') }}"></script>
+  <script src="{{ asset('js/todolist.js') }}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ asset('js/dashboard.js') }}"></script>
+  {% endblock %}

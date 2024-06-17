@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commentaire index{% endblock %}
+
+{% block body %}
+    <h1>Liste Des Commentaires</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+          
+                <th>Contenu</th>
+                  <th>User</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentaire in commentaires %}
+            <tr>
+              
+                <td>{{ commentaire.contenu }}</td>
+                <td>{{ commentaire.idClient.nom }} {{ commentaire.idClient.prenom }}</td>
+
+                <td>{{ commentaire.dateCom ? commentaire.dateCom|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                         <button type="button" class="btn btn-info">
+        <a href="{{ path('app_commentaire_show', {'idCom': commentaire.idCom,'idClient': commentaire.idClient.id}) }}" style="color: white; text-decoration: none;">afficher🔎</a>
+    </button>
+    <button type="button" class="btn btn-success">
+        <a href="{{ path('app_commentaire_edit', {'idCom': commentaire.idCom,'idClient': commentaire.idClient.id}) }}" style="color: white; text-decoration: none;">éditer🖊</a>
+    </button>
+                        {{ include('commentaire/_supprimer_form.html.twig') }}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commentaire_new', {'idPub': publication.idPub, 'idClient': publication.idClient.id}) }}" class="btn btn-primary">Ajouter un commentaire</a>
+    <a href="{{ path('app_publication_index', {'idClient': publication.idClient.id}) }}" >Retourner aux publications</a>
+
+{% endblock %}

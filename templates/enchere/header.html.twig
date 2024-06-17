@@ -1,0 +1,108 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/navbarstyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>affariyeti.com | The Best Deals </title>
+  </head>
+
+  <body>
+    <div id="nav-placeholder">
+      <div id="ship">
+    </div>
+    <div id="navbarstart">
+      <img id="logoclick" src="{{ asset('images/logo.png') }}" alt="logo" >
+        <div>
+            <input placeholder="Search... ">
+            <button id="navbarSearchBtn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" id="nav-search-btn-logo" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg></button>
+        </div>
+        {% if app.user %}
+        <div> 
+            <svg class="iconsvg" width="56"  height="30" viewBox="0 0 24 24" stroke="#2F3337"
+                fill="#2F3337">
+                <title>User</title>
+                <path d="M1 23c0-5.523 4.477-10 10-10h2c5.523 0 10 4.477 10 10M12 13a6 6 0 100-12 6 6 0 000 12z"
+                    stroke="inherit" fill="none" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+            <br> <a href="{{ path('app_profile') }}">Profile</a>
+        </div>
+
+         <div> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="22" viewBox="0 0 512 512" id="login"><path d="M255.988 32C160.473 32 78.934 91.804 46.727 176h34.639c9.396-20.484 22.457-39.35 38.868-55.762C156.497 83.973 204.709 64 255.988 64c51.286 0 99.504 19.973 135.771 56.239C428.027 156.505 448 204.719 448 256c0 51.285-19.973 99.501-56.239 135.765C355.494 428.029 307.275 448 255.988 448c-51.281 0-99.493-19.971-135.755-56.234-16.412-16.412-29.473-35.28-38.871-55.766H46.725c32.206 84.201 113.746 144 209.264 144C379.703 480 480 379.715 480 256c0-123.702-100.297-224-224.012-224z"></path><path d="M206.863 323.883l22.627 22.627L320 256l-90.51-90.51-22.628 22.628L258.745 240H32v32h226.745z"></path></svg>
+            <br> <a href="{{ path('app_logout') }}">LogOut</a>
+        </div>
+        {% endif %}
+    {% if app.user == false %}
+         <div> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="56" height="22" viewBox="0 0 512 512" id="login"><path d="M255.988 32C160.473 32 78.934 91.804 46.727 176h34.639c9.396-20.484 22.457-39.35 38.868-55.762C156.497 83.973 204.709 64 255.988 64c51.286 0 99.504 19.973 135.771 56.239C428.027 156.505 448 204.719 448 256c0 51.285-19.973 99.501-56.239 135.765C355.494 428.029 307.275 448 255.988 448c-51.281 0-99.493-19.971-135.755-56.234-16.412-16.412-29.473-35.28-38.871-55.766H46.725c32.206 84.201 113.746 144 209.264 144C379.703 480 480 379.715 480 256c0-123.702-100.297-224-224.012-224z"></path><path d="M206.863 323.883l22.627 22.627L320 256l-90.51-90.51-22.628 22.628L258.745 240H32v32h226.745z"></path></svg>
+            <br> <a href="{{ path('app_login') }}">Login</a>
+        </div>
+          
+        <div> 
+           <svg version="1.1" id="Layer_1" width="56" height="30"   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 116.17 122.88" style="enable-background:new 0 0 116.17 122.88" xml:space="preserve"><style type="text/css"><![CDATA[
+	.st0{fill-rule:evenodd;clip-rule:evenodd;}
+]]></style><g><path class="st0" d="M70.25,112.11H5.94c-5.09-0.39-6.32-4.05-5.85-8.28c2.79-24.92,30.74-17.71,41.97-27.82l0,0 c5.6,16.48,29.01,17.09,34.26,0c1.21,1.09,2.89,2.01,4.86,2.82c-1.81,1.1-3.52,2.43-5.08,3.99 C68.18,90.73,66.23,102.36,70.25,112.11L70.25,112.11z M110,86.96c8.22,8.22,8.22,21.54,0,29.76c-8.22,8.22-21.54,8.22-29.76,0 s-8.22-21.54,0-29.76C88.46,78.74,101.79,78.74,110,86.96L110,86.96L110,86.96z M92.97,90.16h4.3c0.59,0,1.07,0.48,1.07,1.07v7.38 h7.38c0.59,0,1.07,0.48,1.07,1.07v4.3c0,0.59-0.48,1.07-1.07,1.07h-7.38v7.38c0,0.59-0.48,1.07-1.07,1.07h-4.3 c-0.59,0-1.07-0.48-1.07-1.07v-7.38h-7.38c-0.59,0-1.07-0.48-1.07-1.07v-4.3c0-0.59,0.48-1.07,1.07-1.07h7.38v-7.38 C91.9,90.65,92.38,90.16,92.97,90.16L92.97,90.16z M41.91,59.48c2.13,3.37,4.35,6.82,7.11,9.36c2.66,2.43,5.89,4.08,10.15,4.09 c4.63,0.01,8-1.7,10.75-4.27c2.86-2.67,5.1-6.33,7.33-9.99l5.97-9.83c1.11-2.55,1.52-4.24,1.26-5.24 c-0.16-0.59-0.81-0.88-1.92-0.93c-0.23-0.01-0.48-0.01-0.72-0.01c-0.26,0.01-0.54,0.03-0.84,0.05c-0.17,0.01-0.31,0-0.46-0.03 c-0.52,0.03-1.08-0.01-1.63-0.09l2.04-9.05c-15.17,2.39-26.51-8.87-42.53-2.25l1.16,10.66c-0.63,0.04-1.25,0.01-1.82-0.07 C28.56,42.18,40.1,56.59,41.91,59.48L41.91,59.48L41.91,59.48z M84.62,39.96c1.47,0.45,2.41,1.38,2.8,2.89 c0.43,1.67-0.04,4.02-1.46,7.24l0,0c-0.03,0.06-0.05,0.12-0.09,0.17l-6.03,9.94c-2.33,3.83-4.68,7.68-7.84,10.62 c-3.26,3.06-7.29,5.09-12.79,5.07c-5.13-0.01-9.01-1.97-12.18-4.88c-3.83-3.52-21.49-25.62-13.6-30.95 c0.39-0.25,0.82-0.48,1.28-0.65c-0.35-4.57-0.47-10.33-0.25-15.15c0.12-1.14,0.34-2.28,0.65-3.43c1.35-4.84,4.75-8.74,8.95-11.41 c2.32-1.48,4.86-2.59,7.5-3.33c1.68-0.48-1.43-5.86,0.3-6.02c8.4-0.87,22.02,6.81,27.89,13.17c2.93,3.18,4.79,7.4,5.19,12.98 L84.62,39.96L84.62,39.96L84.62,39.96L84.62,39.96L84.62,39.96z"/></g></svg>
+            <br> <a href="{{ path('app_register') }}">SignUp</a>
+        </div>
+        {% endif %}
+        <div>
+            <svg class="iconsvg" width="22" height="22" viewBox="0 0 24 24" stroke="#2F3337"
+                fill="#2F3337">
+                <title>Heart</title>
+                <path d="M21.241 3.757A6 6 0 0012 4.684a6 6 0 10-9.242 7.558l9.241 9.243 9.243-9.243a6 6 0 000-8.485z"
+                    fill="none" stroke="inherit" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+            </svg>
+          <br>
+            <a href="{{ path('home') }}">List</a>
+        </div>
+        <div>
+          <div id="cartCount"></div>
+            <svg  class="iconsvg" width="30" height="21" viewBox="0 0 24 24" stroke="#2F3337"
+                fill="#2F3337">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M7.174 14.4L5.208.833C5.14.356 4.697 0 4.174 0h-3.13C.466 0 0 .43 0 .96s.467.96 1.043.96H3.26l1.966 13.567c.07.477.512.833 1.035.833h14.608c.498 0 .926-.323 1.024-.772l2.087-9.6c.113-.52-.254-1.025-.819-1.13-.565-.103-1.115.234-1.228.754L20.014 14.4H7.174zm.13 9.6a2.087 2.087 0 100-4.174 2.087 2.087 0 000 4.174zm14.61-2.087a2.087 2.087 0 11-4.175 0 2.087 2.087 0 014.174 0z"
+                    stroke="none" fill="inherit"></path>
+            </svg>
+            
+            <br>
+            <a href="{{ path('cart') }}"> Cart </a>
+        </div>
+    </div>
+    
+    <div id="navbaritems">
+        <ul>
+          <li><a href="{{ path('home') }}">Home</a></li>
+
+          <li>
+            <a href="{{ path('product') }}" >Category</a>
+            <ul>
+                <li><a href=""> Office Furniture</a></li>
+            </ul>
+          </li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li>
+            <a href="{{path('app_enchere_index')}}">Auction</a>
+            <ul>
+              <li><a href="{{path('app_enchere_new')}}">Add new Auction</a></li>
+              <li><a href="{{path('app_enchere_index')}}">Auction List vlaible </a></li>
+            </ul>
+
+        </ul>
+        <li/>
+    </div>
+    </div>
+    <!-- HomePageStart -->
+ 
+<br></br>
+<br></br>
+<br></br>
+<br></br>

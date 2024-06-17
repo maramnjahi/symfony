@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center">Produit</h1>
+
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th scope="row">IdP</th>
+                        <td>{{ produit.idP }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NomP</th>
+                        <td>{{ produit.nomP }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DescriptionP</th>
+                        <td>{{ produit.descriptionP }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PrixP</th>
+                        <td>{{ produit.prixP }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ImageP</th>
+                        <td>
+                            {% if produit.imageP %}
+                                <img src="/tn.esprit.affariety.image/{{ produit.imageP }}" alt="Product Image" class="img-fluid">
+                            {% else %}
+                                No image available
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center">
+                <a href="{{ path('app_produit_index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to List</a>
+                <a href="{{ path('app_produit_edit', {'idP': produit.idP}) }}" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit</a>
+                <a href="{{ path('app_produit_delete', {'idP': produit.idP}) }}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

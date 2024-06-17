@@ -1,0 +1,102 @@
+{% extends 'ClientBase.html.twig' %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/navbarstyle.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+<style> .mainPrice-cart22{
+    width: 100%;
+     display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 20%;
+        height: 350px;
+        text-align: center;
+        padding: 10px;
+        margin-right: 90px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }</style>
+{%endblock%}
+{% block title %}Panier index{% endblock %}
+
+{% block body %}
+<h2>Shopping Cart</h2>
+
+<!-- <div id="cart-container"></div> -->
+
+
+<div id="containerC">
+    <div class="card mr-3" style="width: 100%;">
+        <div class="card-body">
+
+            {% set totalItems = 0 %}
+
+            <div id="OverstockBrand">
+                <br>
+                <br>
+                <br>
+                <br>
+
+
+                {% for produit in produits %}
+                {% set totalItems = totalItems + 1 %}
+
+                <br>
+
+                <div>
+                    <img src="{{ asset('tn.esprit.affariety.image/' ~ produit.imageP) }}" alt="" />
+                    <p><b>{{ produit.nomP }}</b></p>
+                    <p>{{ produit.descriptionP }}</p>
+                    <p>{{ produit.prixP }}</p>
+                    <button class="btn btn-info mb-3"><a
+                            href="{{path('app_panier_delete', {'id': produit.idP})}}">Delete</a></button>
+
+                </div>
+                <br>
+                <br>
+
+
+
+                {% else %}
+                <p>no records found</p>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mainPrice-cart22">
+
+        <p>Total Items :<span id="total-num">{{ totalItems }}</span></p>
+        <h5>Total Price : {{ totalPrix }} DT <span id="total-price"></span></h5>
+        <div>
+            <input id="inputC" placeholder="Add a Promo Code" />
+            <button id="promoC">Apply</button>
+        </div>
+        <!-- <a style="padding: 10px 0;" id="paymentC" href="address.html">Check Out</a> -->
+        <button id="paymentC" class="mb-3"> <a href="{{ path('app_panier_passer_command') }}"
+                style="color:white ; text-decoration: none;">Confirm</a></button>
+
+
+                <button id="paymentC" class="mb-3"> <a href="{{ path('export_product_to_pdf') }}"
+                    style="color:white ; text-decoration: none;">Export PDF</a></button>
+            <button id="paymentC" class="mb-3" style="background-color: #11d6ef;"> <a
+                    href="{{ path('Client_categorie_index', {'id_client': app.user.id}) }}" style="color:white ; text-decoration: none;">Continuer
+                    achat</a></button>
+                       <button id="paymentC" class="mb-3" style="background-color: #11d6ef;"> <a
+                    href="{{ path('Client_categorie_index', {'id_client': app.user.id}) }}" style="color:white ; text-decoration: none;">continuer livraison</a></button>
+    </div>
+    
+    
+</div>
+</div>
+{% endblock %}
+
+
+
+
+{% block js %}
+<script src="{{ asset('./js/cart.js') }}"> </script>
+<script src="{{ asset('./js/navbarscripting.js') }}"></script>
+<script src="{{ asset('./js/productdetailsjs.js') }}"></script>
+{%endblock%}

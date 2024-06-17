@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+{% block body %}
+    <h1>Produit index</h1>
+
+   <a href="{{ path('app_categorie_index')}}">Back to Categories</a>
+  <br>
+    <div id="OverstockBrand">
+      
+         <br>
+
+        {% for produit in produits %}
+         <br>
+            <div>
+                <img src="{{ asset('tn.esprit.affariety.image/' ~ produit.imageP) }}" alt="" />
+                <p><b>{{ produit.nomP }}</b></p>
+                <p>{{ produit.descriptionP }}</p>
+                <p>{{ produit.prixP }}</p>
+       </div>
+            <br>
+            <br>
+    
+
+
+        {% else %}
+            <p>no records found</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

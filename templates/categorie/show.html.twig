@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+<br>
+<br>
+<br>
+    <h1>Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            
+            <tr>
+                <th>Nom Catégorie</th>
+                <td>{{ categorie.nomC }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Bouton pour revenir à la liste des catégories -->
+    <a href="{{ path('app_categorie_index') }}" class="btn btn-info ">Back to list</a>
+
+    <!-- Bouton pour éditer la catégorie -->
+    <a href="{{ path('app_categorie_edit', {'idC': categorie.idC}) }}" class="btn btn-warning">Edit</a>
+
+{% endblock %}

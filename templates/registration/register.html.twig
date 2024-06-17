@@ -1,0 +1,126 @@
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Signup Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    
+  </head>
+  <body>
+    <section class="wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card signup">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sign Up</h5>
+    {{ form_start(registrationForm) }}
+    {% if form_errors(registrationForm.recaptcha) or form_errors(registrationForm.email) or form_errors(registrationForm.plainPassword)  %}
+   <div class="alert alert-danger">
+        <ul>
+        {% if  form_errors(registrationForm.recaptcha) %}
+          {{ form_errors(registrationForm.recaptcha) }}
+          {% endif %}
+             {% if  form_errors(registrationForm.email) %}
+          {{ form_errors(registrationForm.email) }}
+          {% endif %}
+            {% if  form_errors(registrationForm.plainPassword) %}
+          {{ form_errors(registrationForm.plainPassword) }}
+          {% endif %}
+           
+        </ul>
+    </div> 
+    {% endif %}
+    <div class="form-group col-6">
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control custom-input', 'placeholder': 'Email'}}) }}
+       {% if form_errors(registrationForm.email) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.email) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+    <div class="form-group col-6" >
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control custom-input', 'placeholder': 'Password'}}) }}
+       {% if form_errors(registrationForm.plainPassword) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.plainPassword) }}
+        </ul>
+    </div>
+    {% endif %}
+
+    </div>
+     <div class="form-group col-6">
+        {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control custom-input', 'placeholder': 'Nom'}}) }}
+       {% if form_errors(registrationForm.nom) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.nom) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+     <div class="form-group col-6">
+        {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control custom-input', 'placeholder': 'Prenom'}}) }}
+       {% if form_errors(registrationForm.prenom) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.prenom) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+
+   <div class="form-group col-6">
+        {{ form_widget(registrationForm.age, {'attr': {'class': 'form-control custom-input', 'placeholder': 'age'}}) }}
+       {% if form_errors(registrationForm.age) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.age) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+
+       <div class="form-group col-6">
+        {{ form_widget(registrationForm.sexe, {'attr': {'class': 'form-control custom-input', 'placeholder': 'sexe'}}) }}
+       {% if form_errors(registrationForm.sexe) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.sexe) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+
+       <div class="form-group col-6">
+        {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control custom-input', 'placeholder': 'phone'}}) }}
+       {% if form_errors(registrationForm.phone) %}
+    <div class="alert alert-danger">
+        <ul>
+           {{ form_errors(registrationForm.phone) }}
+        </ul>
+    </div>
+    {% endif %}
+    </div>
+    <div class="form-group col-6">
+   {{ form_row(registrationForm.recaptcha) }}
+    </div>
+
+     <div class="form-group col-6" >
+    <button type="submit" class="btn btn-primary " style="background-color: #40ba37;">Register</button>
+    </div>
+     <div class="form-group form-check">
+                                    <a href="{{path('app_reset_password')}}" class="forgot-password">Forgot password?</a>
+      </div>
+    {{ form_end(registrationForm) }}
+ </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

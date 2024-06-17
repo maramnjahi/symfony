@@ -1,0 +1,501 @@
+{% extends 'ClientBase.html.twig' %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/navbarstyle.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+<style> .mainPrice-cart22{
+    width: 100%;
+     display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 20%;
+        height: 350px;
+        text-align: center;
+        padding: 10px;
+        margin-right: 90px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }</style>
+{%endblock%}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Styles pour le formulaire de publication */
+        .publication-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .publication-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        
+        .publication-form input[type="file"] {
+            display: none;
+        }
+        
+        .publication-form label {
+            display: inline-block;
+            background-color: #1877f2;
+            color: #fff;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        
+        .publication-form label:hover {
+            background-color: #0e5a8a;
+        }
+        
+        .publication-form button[type="submit"] {
+            background-color: #1877f2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .publication-form button[type="submit"]:hover {
+            background-color: #0e5a8a;
+        }
+        
+        /* Styles pour centrer le contenu */
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+        }
+        
+        
+        /* Styles pour le conteneur des publications */
+        .publications-container {
+            width: 600px;
+        }
+        
+        /* Styles pour chaque publication */
+        .publication {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .publication img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        /* Style pour la date de la publication */
+        .publication-date {
+            margin-top: 10px;
+            color: #666;
+        }
+        
+        /* Styles pour le texte de la publication */
+        .publication-text {
+            margin-bottom: 10px;
+        }
+        
+        /* Styles pour la barre de boutons */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .action-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        
+        .action-button i {
+            margin-right: 5px;
+        }
+        
+        .action-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .action-button:active {
+            background-color: #ccc;
+        }
+        
+        /* Styles pour la section des commentaires */
+        .comment-section {
+    display: none; /* Masquer la section par défaut */
+    margin-top: 20px;
+}
+        
+        /* Styles pour chaque commentaire */
+        .comment {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        /* Styles pour le formulaire de commentaire */
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            resize: none;
+        }
+        
+        .submit-comment {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #1877f2;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-comment:hover {
+            background-color: #0e5a8a;
+        }
+        
+        /* Styles pour la liste déroulante des options */
+        .options {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 120px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        .options a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .options a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Styles pour la fenêtre modale */
+        .modal {
+            display: none; /* Par défaut, la fenêtre modale est cachée */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .notification {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+        
+    </style>
+</head>
+<body>
+<div class="center-container">
+    <div class="publications-container">
+    
+        <!-- Formulaire pour écrire une nouvelle publication -->
+        <div class="publication-form">
+            {{ form_start(form, {'attr': {'id': 'publication-form', 'novalidate': 'novalidate'}}) }}
+            <div class="form-group">
+                <b class="text-danger">{{ form_errors(form.contenu) }}</b>
+                <b class="text-danger">{{ form_errors(form.photoFile) }}</b>
+                {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'id': 'publication-contenu'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="publication-photo">
+                    <i class="fas fa-upload"></i> Ajouter une photo
+                </label>
+                {{ form_widget(form.photoFile, {'id': 'publication-photo', 'attr': {'accept': 'image/*', 'onchange': 'updatePhotoPath(this)'}}) }}
+                <output id="photo-path" for="publication-photo"></output>
+                <button type="submit" class="btn btn-success">Publier</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+                <div id="notifications-container"></div>
+        <!-- Publications -->
+       {% for publication in publications %}
+    <div class="publication">
+        <div class="publication-text">
+            <i class="fas fa-user"></i> <!-- Icône utilisateur -->
+            <b>{{ publication.idClient.prenom }} {{ publication.idClient.nom }}</b>
+        </div>
+        <div class="publication-text">
+            <a>💬 {{ publication.contenu }}</a>
+        </div>
+        {% if publication.photo %}
+            <img src="{{ asset(publication.photo) }}" alt="Photo de la publication">
+        {% endif %}
+        <div class="publication-date">
+            <i>{{ publication.datePub ? publication.datePub|date('Y-m-d H:i:s') : '' }}</i>
+        </div>
+        <div class="publication-likedislike">
+            <i class="far fa-thumbs-up"></i> ({{ publication.nbLikes }})
+            <i class="far fa-thumbs-down"></i> ({{ publication.nbDislike }})
+        </div>
+        <div class="action-bar">
+            <div class="action-buttons">
+<span class="action-button" onclick="likePost('{{ publication.idPub }}', '{{ publication.idClient.id }}')">
+                            <i class="far fa-thumbs-up"></i> J'aime
+                        </span>        
+<span class="action-button" onclick="dislikePost('{{ publication.idPub }}', '{{ publication.idClient.id }}')"><i class="far fa-thumbs-down"></i> Je n'aime pas</span>
+                <span class="action-button" onclick="toggleComments(this)"><i class="far fa-comment"></i> Commentaires</span>
+                <span class="action-button" onclick="toggleOptions(this)"> Options <i class="fas fa-caret-down"></i>
+                    <div class="options">
+<a href="{{ path('app_publication_editfront', {'idPub': publication.idPub, 'idClient': publication.idClient.id}) }}" class="edit-link" data-edit-url="{{ path('app_publication_editfront', {'idPub': publication.idPub, 'idClient': publication.idClient.id}) }}">Éditer</a>
+           <a href="#" onclick="event.preventDefault(); if (confirm('Êtes-vous sûr(e) de vouloir supprimer cet élément ?')) { document.getElementById('form-delete-{{ publication.idPub }}').submit(); }">
+    Supprimer
+</a>
+<form id="form-delete-{{ publication.idPub }}" action="{{ path('app_publication_supprimer', {'idPub': publication.idPub, 'idClient': publication.idClient.id}) }}" method="post" style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token('supprimer' ~ publication.idPub) }}">
+</form>
+
+                    </div>
+                </span>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            {% if comments[publication.idPub] %}
+                {% for commentaire in comments[publication.idPub] %}
+                    <div class="comment">
+                        <b>{{ commentaire.idClient.prenom }} {{ commentaire.idClient.nom }}:</b> {{ commentaire.contenu }}
+                        <div class="publication-date">
+                            <i>{{ commentaire.dateCom ? commentaire.dateCom|date('Y-m-d H:i:s') : '' }}</i>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Pas de commentaires.</p>
+            {% endif %}
+<a href="{{ path('app_publication_commentaire', {'idPub': publication.idPub, 'idClient': publication.idClient.id}) }}">Ajouter un commentaire</a>
+        </div>
+    </div>
+{% else %}
+    <p>Aucune publication trouvée</p>
+{% endfor %}
+ <div class="center-container">
+            <div class="pagination">
+                {{ knp_pagination_render(publications) }}
+            </div>
+    </div>
+</div>
+
+<!-- Fenêtre modale pour l'édition -->
+<div id="editModal" class="modal" style="display: none;"> <!-- Ajoutez style="display: none;" pour que la fenêtre modale soit cachée par défaut -->
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <div id="editModalContent"></div>
+    </div>
+</div>
+
+<script>
+    // Fonction pour afficher ou masquer les options de publication
+    function toggleOptions(element) {
+        var options = element.querySelector('.options');
+        if (options.style.display === 'block') {
+            options.style.display = 'none';
+        } else {
+            options.style.display = 'block';
+        }
+    }
+
+    // Fonction pour afficher ou masquer la section des commentaires
+    function toggleComments(button) {
+        var commentSection = button.parentNode.parentNode.nextElementSibling;
+        if (commentSection.style.display === 'none') {
+            commentSection.style.display = 'block'; // Afficher la section
+        } else {
+            commentSection.style.display = 'none'; // Masquer la section
+        }
+    }
+
+    // Intercepter le clic sur le lien "Éditer"
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.matches('.edit-link')) {
+            event.preventDefault(); // Empêcher le comportement par défaut du lien
+            var editUrl = event.target.getAttribute('data-edit-url'); // Récupérer l'URL de l'édition
+            if (editUrl) {
+                openEditModal(editUrl); // Ouvrir la fenêtre modale avec le formulaire d'édition
+            }
+        }
+    });
+
+    // Fonction pour ouvrir la fenêtre modale d'édition
+    function openEditModal(editUrl) {
+        history.pushState({}, '', editUrl); // Mettre à jour l'URL dans le navigateur
+        fetch(editUrl)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('editModalContent').innerHTML = html;
+            document.getElementById('editModal').style.display = 'block'; // Modifier le style pour afficher la fenêtre modale
+        });
+    }
+
+    // Fonction pour fermer la fenêtre modale d'édition
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+        history.back(); // Revenir à l'URL précédente
+    }
+
+ // Fonction pour gérer le clic sur le bouton J'aime
+    function likePost(idPub, idClient) {
+                 fetch('{{ path('app_publication_like') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ idPub: idPub, idClient: idClient })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Mettre à jour le nombre de likes affichés
+                const likesCountElement = document.querySelector('.likes-count[data-id="' + idPub + '"]');
+                if (likesCountElement) {
+                    likesCountElement.textContent = '(' + data.likesCount + ')';
+                }
+                // Enregistrer dans localStorage pour éviter les clics multiples
+                localStorage.setItem('liked_' + idPub, true);
+
+                // Créer une notification
+                const notification = document.createElement('div');
+                notification.classList.add('notification');
+                notification.textContent = 'Vous avez aimé la publication.';
+                document.getElementById('notifications-container').appendChild(notification);
+
+                // Supprimer la notification après un certain délai
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000); // Supprimez la notification après 5 secondes (5000 millisecondes)
+            } else {
+                alert('Une erreur s\'est produite lors de l\'enregistrement de votre like.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+ // Fonction pour gérer le bouton Je n'aime pas
+function dislikePost(idPub, idClient) {
+        // Mettre à jour la base de données
+         fetch('{{ path('app_publication_dislike') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ idPub: idPub, idClient: idClient })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Mettre à jour le nombre de dislikes affichés
+                const dislikesCountElement = document.querySelector('.dislikes-count[data-id="' + idPub + '"]');
+                if (dislikesCountElement) {
+                    dislikesCountElement.textContent = '(' + data.dislikesCount + ')';
+                }
+                // Enregistrer dans localStorage pour éviter les clics multiples
+                localStorage.setItem('disliked_' + idPub, true);
+
+                // Créer une notification
+                const notification = document.createElement('div');
+                notification.classList.add('notification');
+                notification.textContent = 'Vous n\'avez pas aimé la publication';
+                document.getElementById('notifications-container').appendChild(notification);
+
+                // Supprimer la notification après un certain délai
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000); // Supprimez la notification après 5 secondes (5000 millisecondes)
+            } else {
+                alert('Une erreur s\'est produite lors de l\'enregistrement de votre dislike.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function updatePhotoPath(input) {
+        const photoPath = document.getElementById('photo-path');
+        photoPath.value = input.files[0].name;
+    }
+</script>
+</body>
+</html>
+{% endblock %}

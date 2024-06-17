@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques des Produits{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Statistiques des produits par prix</h1>
+    <canvas id="produitsPrixChart" width="800" height="400"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ttt = {{ produitsPrixQuantite | json_encode | raw }};
+        var labels = ttt.map(function (publication) { return publication.contenu; });
+        var likes = ttt.map(function (publication) { return publication.nbLikes; });
+        var dislikes = ttt.map(function (publication) { return publication.nbDislikes; });
+        var ctx = document.getElementById('produitsPrixChart').getContext('2d');
+        var produitsPrixChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Nombre de likes',
+                    data: likes,
+                    backgroundColor: 'rgba(24, 162, 275, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Nombre de dislikes',
+                    data: dislikes,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: 'rgba(255, 99, 132, 1)'
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

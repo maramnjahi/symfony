@@ -1,0 +1,32 @@
+{{ form_start(form, {'attr': {'class': 'my-form', 'novalidate': 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_label(form.etat, 'État :') }}
+        {% if form_errors(form.etat) %}
+            {{ form_widget(form.etat, {'attr': {'class': 'form-control is-invalid'}}) }}
+        {% else %}
+            {{ form_widget(form.etat, {'attr': {'class': 'form-control'}}) }}
+        {% endif %}
+        <a style="color:red">{{ form_errors(form.etat) }}</a>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.cmdClient, 'Client :') }}
+        {% if form_errors(form.cmdClient) %}
+            {{ form_widget(form.cmdClient, {'attr': {'class': 'form-control is-invalid'}}) }}
+        {% else %}
+            {{ form_widget(form.cmdClient, {'attr': {'class': 'form-control'}}) }}
+        {% endif %}
+        <a style="color:red">{{ form_errors(form.cmdClient) }}</a>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.cmdDate, 'Date :') }}
+        {% if form_errors(form.cmdDate) %}
+            {{ form_widget(form.cmdDate, {'attr': {'class': 'form-control is-invalid'}}) }}
+        {% else %}
+            {{ form_widget(form.cmdDate, {'attr': {'class': 'form-control'}}) }}
+        {% endif %}
+        <a style="color:red">{{ form_errors(form.cmdDate) }}</a>
+    </div>
+    <!-- Add more fields with the same error handling and styling logic here -->
+    <button type="submit" class="btn btn-info" style="color: white; text-decoration: none;">{{ button_label|default('Save') }}</button>
+    <button type="submit" class="btn btn-secondary" style="color: white; text-decoration: none;"><a href="{{ path('app_commande_index') }}" style="color: aliceblue;text-decoration: none;">back to list</a></button>
+{{ form_end(form) }}

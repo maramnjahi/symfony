@@ -1,0 +1,392 @@
+{% extends 'ClientBase1.html.twig' %}
+
+{% block body %}
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.feedback-buttons {
+  text-align: center;
+}
+
+.feedback-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.feedback-buttons button:hover {
+  background-color: #f0f0f0;
+}
+#navbaritems {
+    position: relative;
+    z-index: 1;
+}
+
+.product-card {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    width: 270px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 0;
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.product-card p {
+    margin: 5px 0;
+}
+
+.product-card .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: auto;
+}
+
+.product-card button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.product-card button:hover {
+    background-color: #45a049;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Ajout de marge en bas */
+}
+
+.search-input {
+    padding: 10px;
+    border: 10px ;
+    border-radius: 20px ;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
+.bi-search {
+    vertical-align: middle;
+}
+
+/* Nouveau style pour le slider */
+#price-slider {
+    width: 100%;
+    margin-top: 20px; /* Ajout de marge en haut */
+}
+
+#price-value {
+    margin-top: 10px; /* Espacement supplémentaire entre le slider et la valeur affichée */
+}
+.price-range-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.price-range {
+    width: 100%;
+}
+
+/* Supprimez le scroll des produits */
+#OverstockBrand {
+    overflow-y: hidden;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    overflow-x: auto; /* Activer le défilement horizontal */
+    max-width: 100%; /* Définir une largeur maximale */
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap; /* Empêcher les éléments de pagination de passer à la ligne */
+}
+
+.pagination ul li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li span {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination ul li.active a,
+.pagination ul li a:hover {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+
+/* Ajoutez le scroll à toute la page */
+body {
+    overflow-y: auto;
+}
+</style>
+<div id="feedbackModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Aimez-vous notre site ?</h2>
+    <p>Nous apprécierions votre avis sur notre site.</p>
+    <div class="feedback-buttons">
+      <button id="yesButton">Oui</button>
+      <button id="noButton">Non</button>
+    </div>
+  </div>
+</div>
+
+<div id="navbaritems">
+    <div id="navbaritems">
+        <ul>
+            <li>
+            
+                <a href="{{'app_produit_index' , 'user_id' : app.user.id}}" >Store</a> <!-- Lien modifié avec un placeholder # -->
+                <ul>
+                    <li><a href="{{ path('Client_categorie_index', {'id_client': id_client}) }}">Categories</a></li>
+                    <li><a href="{{ path('shop_Products_index', {'id_client': id_client}) }}">Shop</a></li>
+                    <li><a href="{{ path('Client_Products_index', {'id_client': id_client}) }}">My Products</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">hello </a>
+                <ul>
+                    <li><a href="#">Patio Furniture</a></li>
+                    <li><a href="#">Garden </a></li>
+                    <li><a href="#"> Outdoor Decor </a></li>
+                    <li><a href="#"> Grills and Outdoor Cooking </a></li>
+                    <li><a href="#"> Outdoor Shades and Structures </a></li>
+                    <li><a href="#">Sport and Outdoor </a></li>
+                    <li><a href="#"> Bedroom Furniture</a></li>
+                    <li><a href="#"> Office Furniture</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Gestion 3</a>
+                <ul>
+                    <li><a href="#">Area Rugs By Size </a></li>
+                    <li><a href="#">Trending Rugs</a></li>
+                    <li><a href="#"> Area Rugs by Color </a></li>
+                    <li><a href="#"> Area Rugs by Style </a></li>
+                    <li><a href="#"> Rugs By Types </a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Gestion 4</a>
+                <ul>
+                    <li><a href="#">Mirrros </a></li>
+                    <li><a href="#">Faux Plants and Flowers </a></li>
+                    <li><a href="#"> Decorative Accessories  </a></li>
+                    <li><a href="#"> Window Treatments </a></li>
+                    <li><a href="#"> Arts </a></li>
+                    <li><a href="#">Throw Pillow </a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Gestion 5</a>
+                <ul>
+                    <li><a href="#">Bedding Sets</a></li>
+                    <li><a href="#">Bedding Essentials </a></li>
+                    <li><a href="#">Bed Sheets and Pollowcases</a></li>
+                    <li><a href="#"> Window Treatments </a></li>
+                    <li><a href="#"> Mattress Pads and Toppers </a></li>
+                    <li><a href="#">Mattress</a></li>
+                    <li><a href="#">Blankets</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<br>
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search for products...">
+    <button id="navbarSearchBtn" class="search-btn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Ajout du slider de prix -->
+<div class="price-range-container">
+    <input type="range" min="0" max="10000" value="10000" class="price-range" id="priceRange">
+    <p>Prix maximal : <span id="priceValue">10000</span> TND</p>
+</div>
+
+<div id="OverstockBrand">
+    {% for produit in produits %}
+        {% if produit.nomP|lower is not null %}
+            <div class="product-card">
+                <img src="{{ asset('tn.esprit.affariety.image/' ~ produit.imageP) }}" alt="" />
+                <p><b>{{ produit.nomP }}</b></p>
+                <p>{{ produit.descriptionP }}</p>
+                <p class="product-price">{{ produit.prixP }}</p> <!-- Ajoutez le prix du produit ici -->
+                <div class="button-container">
+                    <button onclick="window.location.href='{{ path('app_produit_details' , {'id_client': id_client , 'idC': produit.idC.idC , 'idP': produit.idP}) }}'">Show Details</button>
+                    <button class="add-to-cart-button" data-product-id="{{ produit.idP }}"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+        const productCards = document.querySelectorAll('.product-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim().toLowerCase();
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('b').innerText.toLowerCase();
+                if (productName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        const productCards = document.querySelectorAll('.product-card');
+
+        function filterProductsByPrice(minPrice, maxPrice) {
+            productCards.forEach(card => {
+                const productPrice = parseFloat(card.querySelector('.product-price').innerText);
+
+                if (productPrice >= minPrice && productPrice <= maxPrice) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        priceRange.addEventListener('input', function() {
+            const minPrice = 0;
+            const maxPrice = parseInt(this.value);
+
+            priceValue.innerText = maxPrice;
+            filterProductsByPrice(minPrice, maxPrice);
+        });
+    });
+</script>
+<script>
+// Fonction pour afficher la boîte de dialogue de feedback
+function showFeedbackModal() {
+  document.getElementById('feedbackModal').style.display = 'block';
+}
+
+// Fonction pour masquer la boîte de dialogue de feedback
+function hideFeedbackModal() {
+  document.getElementById('feedbackModal').style.display = 'none';
+}
+
+// Ajouter un événement click pour fermer la boîte de dialogue lorsqu'on clique sur la croix
+document.querySelector('.close').addEventListener('click', hideFeedbackModal);
+
+// Ajouter un événement click pour montrer la boîte de dialogue de feedback lorsque nécessaire
+// Par exemple, vous pouvez l'appeler après un certain délai ou après un certain nombre de visites sur le site.
+// Ici, nous l'appelons après 10 secondes pour l'exemple.
+setTimeout(showFeedbackModal, 10000);
+
+// Ajouter des événements click pour les boutons de feedback
+document.getElementById('yesButton').addEventListener('click', function() {
+  alert('Merci pour votre avis positif !');
+  hideFeedbackModal();
+});
+
+document.getElementById('noButton').addEventListener('click', function() {
+  alert('Nous sommes désolés que vous n\'ayez pas apprécié votre visite. Nous prendrons en compte votre avis pour nous améliorer.');
+  hideFeedbackModal();
+});
+</script>
+
+
+{% endblock %}

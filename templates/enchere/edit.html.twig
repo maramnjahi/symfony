@@ -1,0 +1,25 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Edit Enchere{% endblock %}
+
+{% block body %}
+{{ include('home/header.html.twig') }}
+<div id="homePage">
+    <div id="topheadImg">
+        
+<br></br>
+<br></br>
+<br></br>
+
+
+    <h1>Edit Auction</h1>
+
+
+    {{ include('enchere/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_enchere_index') }}">back to list</a>
+
+    {{ include('enchere/_delete_form.html.twig') }}
+    </div>
+        
+{% endblock %}

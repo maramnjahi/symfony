@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande Table{% endblock %}
+{% block navbar1 %}{% endblock %}
+{% block body %}
+
+
+
+<h4 class="card-title">
+    <h1>Table des Commandes</h1>
+</h4>
+
+<div class="table-responsive">
+  
+    <table class="table table-hover" id="dataTable">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Etat</th>
+                
+                <th scope="col">{% if app.request.attributes.get('_route') == 'triespcDESC' %}
+                    <a href="{{ path('triespc') }}">Client</a>
+                {% else %}
+                    <a href="{{ path('triespcDESC') }}">Client</a>
+                {% endif %}</th>
+                <th scope="col">{% if app.request.attributes.get('_route') == 'trieDateAsc' %}
+                    <a href="{{ path('trieDateDesc') }}">CmdDate</a>{% else %}
+                    <a href="{{ path('trieDateAsc') }}">CmdDate</a>
+                    {% endif %}</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.id }}</td>
+                <td>{{ commande.etat }}</td>
+                <td>{{ commande.user.nom }} {{ commande.user.prenom }}</td>
+                <td>{{ commande.cmdDate ? commande.cmdDate|date('Y-m-d H:i:s') : '' }}</td>
+
+                <td>
+    <button type="button" class="btn btn-info">
+        <a href="{{ path('app_commande_show', {'id': commande.id}) }}" style="color: white; text-decoration: none;">Show</a>
+    </button>
+
+    <button type="button" class="btn btn-success">
+        <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" style="color: white; text-decoration: none;">Edit</a>
+    </button>
+
+    <button type="button" class="btn btn-danger">
+        <a href="{{ path('app_commande_delete', {'id': commande.id}) }}" style="color: white; text-decoration: none;">Delete</a>
+    </button>
+
+    <button type="button" class="btn btn-secondary">
+        <a href="{{ path('app_commande_edit_status_termine', {'id': commande.id}) }}" style="color: white; text-decoration: none;">Done</a>
+    </button>
+</td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-info"><a href="{{ path('app_commande_new') }}"
+            style="color: white; text-decoration: none;">Create new</a></button>
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include DataTables library -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+<!-- DataTables Initialization Script -->
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            "initComplete": function (settings, json) {
+                // Customize the search input field
+                var searchInput = $('#dataTable_filter input[type="search"]');
+                searchInput.addClass('form-control');
+                searchInput.attr('placeholder', 'Search...'); // Set placeholder text
+            }
+        });
+    });
+
+</script>
+{% endblock %}

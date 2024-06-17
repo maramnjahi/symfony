@@ -1,0 +1,48 @@
+{% extends 'ClientBase.html.twig' %}
+
+{% block body %}
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+   <div class="col-md-9">
+            <h1 class="titre-categorie">Nos Categories</h1>
+            <br>
+            <br>
+            <div class="row">
+                {% for categorie in categories %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            {% set image_name = '' %}
+            {% if categorie.nomC == 'Salon' %}
+                {% set image_name = 'salon.jpg' %}
+            {% elseif categorie.nomC == 'Cuisine' %}
+                {% set image_name = 'cuisine.jpg' %}
+            {% elseif categorie.nomC == 'Literie' %}
+                {% set image_name = 'literie.jpg' %}
+            {% elseif categorie.nomC == 'Decoration' %}
+                {% set image_name = 'decoration.png' %}
+            {% endif %}
+            <img class="card-img-top" src="{{ asset('images/' ~ image_name) }}" alt="Image de {{ categorie.nomC }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ categorie.nomC }}</h5>
+                <a href="{{ path('app_produit_index', {'id_client': id_client, 'idC': categorie.idC}) }}" class="btn btn-primary btn-light-gray">Voir les produits</a>
+                <a href="{{ path('app_produit_new', {'id_client': id_client, 'idC': categorie.idC}) }}" class="btn btn-success btn-pastel-blue">Ajouter des produits</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p>Aucun enregistrement trouvé</p>
+{% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

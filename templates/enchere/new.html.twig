@@ -1,0 +1,18 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}New Enchere{% endblock %}
+
+{% block body %}
+
+{{ include('home/header.html.twig') }}
+<div id="homePage">
+    <div id="topheadImg">
+
+
+    <h1>Create new Auction</h1>
+
+    {{ include('enchere/_form.html.twig') }}
+
+    <a href="{{ path('app_enchere_index') }}">back to list</a>
+</div>
+{% endblock %}

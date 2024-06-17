@@ -1,0 +1,140 @@
+{% extends 'ClientBase.html.twig' %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+<link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/navbarstyle.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/footer.css') }}">
+<style> .mainPrice-cart22{
+    width: 100%;
+     display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 20%;
+        height: 350px;
+        text-align: center;
+        padding: 10px;
+        margin-right: 90px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }</style>
+{%endblock%}
+{% block body %}
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search for products...">
+    <button id="navbarSearchBtn" class="search-btn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Ajout du slider de prix -->
+<div class="price-range-container">
+    <input type="range" min="0" max="10000" value="10000" class="price-range" id="priceRange">
+    <p>Prix maximal : <span id="priceValue">10000</span> TND</p>
+</div>
+
+<div id="OverstockBrand">
+    {% for produit in produits %}
+        {% if produit.nomP|lower is not null %}
+            <div class="product-card">
+                <img src="{{ asset('tn.esprit.affariety.image/' ~ produit.imageP) }}" alt="" />
+                <p><b>{{ produit.nomP }}</b></p>
+                <p>{{ produit.descriptionP }}</p>
+                <p class="product-price">{{ produit.prixP }}</p> <!-- Ajoutez le prix du produit ici -->
+                <div class="button-container">
+                     <button class="btn "><a href="{{ path('app_panier_new', {'idP': produit.idP}) }}"
+        style="color: black; text-decoration: none;">Add to Cart</a></button>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+        const productCards = document.querySelectorAll('.product-card');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim().toLowerCase();
+
+            productCards.forEach(card => {
+                const productName = card.querySelector('b').innerText.toLowerCase();
+                if (productName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        const productCards = document.querySelectorAll('.product-card');
+
+        function filterProductsByPrice(minPrice, maxPrice) {
+            productCards.forEach(card => {
+                const productPrice = parseFloat(card.querySelector('.product-price').innerText);
+
+                if (productPrice >= minPrice && productPrice <= maxPrice) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        priceRange.addEventListener('input', function() {
+            const minPrice = 0;
+            const maxPrice = parseInt(this.value);
+
+            priceValue.innerText = maxPrice;
+            filterProductsByPrice(minPrice, maxPrice);
+        });
+    });
+</script>
+<script>
+// Fonction pour afficher la boîte de dialogue de feedback
+function showFeedbackModal() {
+  document.getElementById('feedbackModal').style.display = 'block';
+}
+
+// Fonction pour masquer la boîte de dialogue de feedback
+function hideFeedbackModal() {
+  document.getElementById('feedbackModal').style.display = 'none';
+}
+
+// Ajouter un événement click pour fermer la boîte de dialogue lorsqu'on clique sur la croix
+document.querySelector('.close').addEventListener('click', hideFeedbackModal);
+
+// Ajouter un événement click pour montrer la boîte de dialogue de feedback lorsque nécessaire
+// Par exemple, vous pouvez l'appeler après un certain délai ou après un certain nombre de visites sur le site.
+// Ici, nous l'appelons après 10 secondes pour l'exemple.
+setTimeout(showFeedbackModal, 10000);
+
+// Ajouter des événements click pour les boutons de feedback
+document.getElementById('yesButton').addEventListener('click', function() {
+  alert('Merci pour votre avis positif !');
+  hideFeedbackModal();
+});
+
+document.getElementById('noButton').addEventListener('click', function() {
+  alert('Nous sommes désolés que vous n\'ayez pas apprécié votre visite. Nous prendrons en compte votre avis pour nous améliorer.');
+  hideFeedbackModal();
+});
+</script>
+
+
+{% endblock %}

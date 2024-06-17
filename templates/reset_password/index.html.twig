@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset Password{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-5">Reset Password</h1>
+    {{ form_start(form, {'attr': {'class': 'mt-3'}}) }}
+    {% if form_errors(form.recaptcha) or form_errors(form.email) %}
+    <div class="alert alert-danger mt-3">
+        <ul>
+            {% if form_errors(form.recaptcha) %}
+            {{ form_errors(form.recaptcha) }}
+            {% endif %}
+            {% if form_errors(form.email) %}
+            {{ form_errors(form.email) }}
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+    {% for flashSuccess in app.flashes('success') %}
+    <div class="alert alert-success mt-3">{{ flashSuccess }}</div>
+    {% endfor %}
+    {% for flashError in app.flashes('error') %}
+    <div class="alert alert-danger mt-3">{{ flashError }}</div>
+    {% endfor %}
+    <div class="form-group col-6">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+    </div>
+    <div class="form-group col-6">
+        {{ form_row(form.recaptcha) }}
+    </div>
+    <div class="form-group col-6">
+        <button type="submit" class="btn btn-primary" style="background-color: #40ba37;">Reset</button>
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

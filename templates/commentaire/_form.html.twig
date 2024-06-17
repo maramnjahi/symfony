@@ -1,0 +1,43 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+             button.btn-submit {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button.btn-submit:hover {
+    background-color: #0e5a8a;
+}
+    </style>
+
+    <div class="form-group">
+        {{ form_label(form.contenu) }}
+        {{ form_errors(form.contenu) }}
+        {{ form_widget(form.contenu) }}
+    </div>
+
+
+    <button class="btn btn-submit">{{ button_label|default('Enregistrer✅') }}</button>
+{{ form_end(form) }}

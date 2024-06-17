@@ -1,0 +1,8 @@
+{% block body %}
+    <h1>Ajouter un commentaire</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        <button type="submit" class="btn btn-primary">Publier</button>
+    {{ form_end(form) }}
+{% endblock %}

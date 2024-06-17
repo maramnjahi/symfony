@@ -1,0 +1,12 @@
+
+{% block body %}
+    <h1>Modifier la publication</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.photoFile) }}
+        <img src="{{ asset(publication.photo) }}" alt="Photo de la publication" style="display: block; margin-top: 10px; max-width: 200px; height: 200px;">
+
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    {{ form_end(form) }}
+{% endblock %}
